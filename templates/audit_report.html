@@ -4,15 +4,29 @@
   <meta charset="UTF-8">
   <title>Audit Digital - {{ client }}</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    h1 { color: #4a7c59; }
-    h2 { color: #333; margin-top: 20px; }
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    th, td { border: 1px solid #ddd; padding: 8px; }
-    th { background: #f0f0f0; }
+    body { font-family: Arial, sans-serif; margin: 40px; color: #222; }
+    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .brand { font-weight:700; color:#2c6b4a; font-size:20px; }
+    .meta { text-align:right; font-size:12px; color:#666; }
+    h1 { color: #2c6b4a; margin-bottom:0; }
+    h2 { color: #333; margin-top: 26px; }
+    table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13px; }
+    th, td { border: 1px solid #e1e1e1; padding: 10px; vertical-align: top; }
+    th { background: #f7faf6; text-align: left; }
+    ul { margin: 8px 0 16px 18px; }
+    footer { margin-top: 32px; font-size:12px; color:#777; border-top:1px solid #eee; padding-top:10px; }
+    .small { font-size: 12px; color: #666; }
   </style>
 </head>
 <body>
+  <header>
+    <div class="brand">Audit Digital — {{ client }}</div>
+    <div class="meta">
+      Généré le {{ now }}<br/>
+      Rapport automatique
+    </div>
+  </header>
+
   <h1>Audit Digital & Stratégie de Croissance</h1>
   <p><strong>Niveau de maturité :</strong> {{ audit.score_maturite }}/100</p>
 
@@ -25,12 +39,12 @@
 
   <h2>Packs Recommandés</h2>
   <table>
-    <tr><th>Nom</th><th>Description</th><th>Prix (€)</th></tr>
+    <tr><th>Nom</th><th>Description</th><th>Prix</th></tr>
     {% for pack in audit.packs %}
     <tr>
       <td>{{ pack.name }}</td>
       <td>{{ pack.description }}</td>
-      <td>{{ pack.price_eur }}</td>
+      <td>{{ pack.price_eur | eur }}</td>
     </tr>
     {% endfor %}
   </table>
@@ -44,11 +58,20 @@
   {% endfor %}
   </ol>
 
+  {% if audit.assumptions %}
   <h2>Hypothèses</h2>
   <ul>
   {% for h in audit.assumptions %}
     <li>{{ h }}</li>
   {% endfor %}
   </ul>
+  {% endif %}
+
+  <footer>
+    <div class="small">
+      Document généré automatiquement. Pour toute question, contactez l'équipe marketing.<br/>
+      Export : PDF horodaté.
+    </div>
+  </footer>
 </body>
 </html>
