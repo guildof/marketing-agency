@@ -1,4 +1,4 @@
-﻿# marketing_agency/agent.py
+# marketing_agency/agent.py
 from google.adk.agents import LlmAgent
 from google.adk.tools.agent_tool import AgentTool
 
@@ -7,6 +7,7 @@ from .sub_agents.logo_create import logo_create_agent
 from .sub_agents.marketing_create import marketing_create_agent
 from .sub_agents.website_create import website_create_agent
 from .sub_agents.audit_create.agent import audit_agent
+from .sub_agents.web_audit.agent import run_web_audit
 
 from .utils.json_first import extract_first_json
 
