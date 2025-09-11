@@ -1,0 +1,51 @@
+﻿import os
+import sys
+try:
+    from google.cloud import storage
+except Exception as e:
+    print("ERREUR: google-cloud-storage non installé ou import échoué.", e)
+    sys.exit(2)
+
+# Chemins / paramètres (ajuste le bucket si besoin)
+CRED_PATH = r"C:\creds\gcp-creds.json"
+BUCKET_NAME = "agent-market-digit"
+LOCAL_FILE = r"exports\audit_report_Fleurs_de_Loire_20250910_231543.pdf"
+BLOB_NAME = "test_upload_from_local.pdf"
+
+print("-> Vérification présence fichier credentials :", CRED_PATH, "->", os.path.exists(CRED_PATH))
+if not os.path.exists(CRED_PATH):
+    print("-> Erreur: fichier de credentials introuvable. Place-le ici :", CRED_PATH)
+    sys.exit(3)
+
+# On met explicitement la variable d'environnement pour ce process
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = CRED_PATH
+
+if not os.path.exists(LOCAL_FILE):
+    print("-> Erreur: fichier local introuvable :", LOCAL_FILE)
+    sys.exit(4)
+
+try:
+    client = storage.Client()
+    print("-> OK: client GCS initialisé")
+except Exception as e:
+    print("-> Erreur initialisation Client GCS :", e)
+    sys.exit(5)
+
+try:
+    # get_bucket lèvera si bucket absent / pas de droits
+    bucket = client.get_bucket(BUCKET_NAME)
+    print(f"-> OK: bucket trouvé : {BUCKET_NAME}")
+except Exception as e:
+    print(f"-> Erreur: bucket '{BUCKET_NAME}' introuvable ou accès refusé. Détails :", e)
+    sys.exit(6)
+
+try:
+    blob = bucket.blob(BLOB_NAME)
+    blob.upload_from_filename(LOCAL_FILE)
+    print("-> Upload OK -> gs://{}/{}".format(BUCKET_NAME, BLOB_NAME))
+    print("-> URL publique possible (si objet rendu public) : https://storage.googleapis.com/{}/{}".format(BUCKET_NAME, BLOB_NAME))
+except Exception as e:
+    print("-> Erreur pendant l'upload :", e)
+    sys.exit(7)
+
+print("-> FIN: test d'upload terminé avec succès")

@@ -1,0 +1,5 @@
+﻿{ "score_maturite": 72, "sous_scores": {"site_web":40,"seo":50,"google_business_profile":10,"social":80,"ads":0,"crm":0}, "quick_wins":["Créer fiche Google Business"], "packs":[{"name":"Fondations Locales","description":"Mise en place...","price_eur":490}], "roadmap_90j":[{"semaine":1,"objectifs":["Créer fiche Google"]}], "assumptions":["Budget mensuel estimé 500 €"] }
+
+--- 
+
+Résume client / commentaires / partie lisible à afficher au-dessus du PDF (optionnel).

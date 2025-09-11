@@ -18,6 +18,7 @@ google-cloud-aiplatform = { version = "^1.93.0", extras = [
 ] }
 jinja2 = "^3.1.6"
 weasyprint = "^66.0"
+google-cloud-storage = "<3.0.0"
 
 
 [tool.poetry.group.dev]

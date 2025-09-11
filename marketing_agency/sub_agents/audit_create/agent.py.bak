@@ -42,5 +42,5 @@ audit_agent = LlmAgent(
     model=MODEL,
     description="Analyse la maturité digitale et propose 3 packs adaptés",
     instruction=AUDIT_AGENT_PROMPT,
-
+    response_wrapper=_validate_and_format_audit_output,
 )
